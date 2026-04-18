@@ -78,11 +78,11 @@ The list of steps (commands) being executed by this hook. In a step you can defi
     Gookme exits with a non-zero status code if any of the steps fails, as soon as one fails.
 
 !!! warning
-    The pattern provided in `onlyOn` will be matched agains the relative path of matched files of the execution, from the package folder, not from the repository root.
+    The pattern provided in `onlyOn` will be matched against the relative path of matched files of the execution, from the package folder, not from the repository root.
 
 ### Available arguments
 
-A set of arguments is provided by Mookme, that can be directly used in the hooks command definitions using the following syntax in the step definition:
+A set of arguments is provided by Gookme, that can be directly used in the hooks command definitions using the following syntax in the step definition:
 
 ````json title="hooks/commit-msg.json"
 {

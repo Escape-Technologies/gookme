@@ -76,7 +76,7 @@ This will remove all the lines added by Gookme in your Git hooks scripts.
     |  |  |- hooks # will be executed if you commit changes on package A
     |  |  |  |- pre-commit.json
     |  |  |  |- post-commit.json
-    |  |- package A
+    |  |- package B
     |  |  |- hooks # will be executed if you commit changes on package B
     |  |  |  |- pre-commit.json
     ```
@@ -94,7 +94,7 @@ With `Gookme`, your hooks are stored in JSON files called `{hook-type}.json` whe
 - `pre-push`
 
 !!! warning
-    If the command executed by a hook fails, it will prevent the git command to be executed. We recommend you to use the pre-receive hooks carefully, with relatively safe commands, otherwise you might prevent your team for doign stuff like `git pull` or `git fetch`.
+    If the command executed by a hook fails, it will prevent the git command to be executed. We recommend you to use the post-merge and post-checkout hooks carefully, with relatively safe commands, otherwise you might prevent your team from doing stuff like `git pull` or `git fetch`.
 
 
 ### How will Gookme decide which hooks to run ?

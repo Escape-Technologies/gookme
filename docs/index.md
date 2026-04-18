@@ -11,7 +11,7 @@ linter, tests, your favorite commit message checker.
 
     Everything that is invoked through a cli can be used with Gookme!
 
-You are welcome to use it and enjoy it's simplicity.
+You are welcome to use it and enjoy its simplicity.
 **If you encounter any bug or weird behavior, don't be afraid to open an [issue](https://github.com/LMaxence/gookme/issues/new/choose) :)**
 
 ## How does it work ?
@@ -42,7 +42,7 @@ small line in your `.git/hooks` files
 There were several issues with `pre-commit`, that led me to develop my own tool :
 
 - pre-commit is not designed for monorepos, hence most of the hooks are some sort of hacks
-- per-package environment is not easy to manage, because `pre-commit` has it's own global environment and we have to create global dependency to run a particular hook for one package.
+- per-package environment is not easy to manage, because `pre-commit` has its own global environment and we have to create global dependency to run a particular hook for one package.
 
 !!! warning
     This led us to one of the guideline used by `Gookme` to work:

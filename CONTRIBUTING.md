@@ -8,7 +8,7 @@ Thank you for your interest in contributing to this project! This guide will hel
 
 To contribute to this project, you will need:
 
-- [Go](https://golang.org/dl/) (v1.22 or higher)
+- [Go](https://golang.org/dl/) (v1.24 or higher)
 - Git
 - Any text editor (e.g., VSCode, GoLand)
 
@@ -35,7 +35,7 @@ Here's a high-level overview of the components that make up Gookme:
 - **hooks**: This folder contains definition of the hooks that can be used in Gookme. You should not use gookme init to install Gookme within Gookme. This will work, but you will use the released version. If you want to run the development version, you should use the makefile command `make hooks` instead.
 - **packages**: This folder contains the core logic of Gookme. It is divided into several sub-packages:
   - **cli**: The scripts being executed by the CLI for each `gookme` command. Each command has its own file
-  - **configuration**: This is where the different data structures related to hooks, steps, and global configuration of the Gookme CLI are defined. This is also where the logic for walking across the repositorie's files and look for hooks is defined.
+  - **configuration**: This is where the different data structures related to hooks, steps, and global configuration of the Gookme CLI are defined. This is also where the logic for walking across the repository's files and looking for hooks is defined.
   - **executor**: This is where the logic for wrapping the execution of the hooks is defined.
   - **filters**: This is where the logic for filtering the hooks is defined.
   - **git-client**: This is where the logic for interacting with the git repository is defined.
@@ -44,7 +44,7 @@ Here's a high-level overview of the components that make up Gookme:
   - **meta**: This very small package contains the version of Gookme. Changing this version will change the version of Gookme and trigger a release.
   - **test-helpers**: This is where the helpers for the tests are defined.
 - **scripts**: This folder contains the scripts used to manage the project. It is divided into several sub-packages:
-  - **check-formtat.sh**: This script is used to check the format of the files in the project.
+  - **check-format.sh**: This script is used to check the format of the files in the project.
   - **commit-msg**: This script is used to check the format of the commit messages.
   - **generate-dependabot-config.sh**: This script is used to generate the dependabot configuration file.
   - **install.ps1**: This script is used to install Gookme on Windows.

@@ -51,13 +51,12 @@ Given a project directory such as this:
 
 ```sh title="Project structure"
 project-root
-|--- .mookme.json
 |--- hooks
     |--- partials
         |--- pylint-changed-files
- |--- packages
+|--- packages
     |--- some-package
-        |--- .hooks
+        |--- hooks
             |--- pre-commit.json
 ```
 
