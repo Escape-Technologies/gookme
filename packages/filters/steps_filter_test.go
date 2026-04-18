@@ -22,7 +22,7 @@ func getStepFiltersTestCases() []StepFilterTestCase {
 	stepJson := configuration.NewStepFixture().WithOnlyOn("*.json")
 	stepGo := configuration.NewStepFixture().WithOnlyOn("*.go")
 
-	hook := configuration.NewHookFixture("foo/bar").WithFiles().WithStep(stepJson, stepGo)
+	hook := configuration.NewHookFixture("foo/bar").WithFiles("foo/bar/item.json").WithStep(stepJson, stepGo)
 	expectedHook := configuration.NewHookFixture("foo/bar").WithFiles("foo/bar/item.json").WithStep(stepJson.Copy().WithFiles("foo/bar/item.json"))
 
 	cases = append(cases, StepFilterTestCase{
@@ -37,7 +37,7 @@ func getStepFiltersTestCases() []StepFilterTestCase {
 	stepJson = configuration.NewStepFixture().WithOnlyOn("*.json")
 	stepAll := configuration.NewStepFixture()
 
-	hook = configuration.NewHookFixture("foo/bar").WithFiles().WithStep(stepJson, stepAll)
+	hook = configuration.NewHookFixture("foo/bar").WithFiles("foo/bar/item.go").WithStep(stepJson, stepAll)
 	expectedHook = configuration.NewHookFixture("foo/bar").WithFiles("foo/bar/item.go").WithStep(stepAll.Copy())
 
 	cases = append(cases, StepFilterTestCase{
@@ -57,6 +57,7 @@ func TestFilterStepsWithOnlyOn(t *testing.T) {
 
 			for i, hook := range res {
 				assert.Equal(t, tc.Expected[i].Path, hook.Path)
+				assert.Equal(t, tc.Expected[i].Files, hook.Files)
 				assert.Equal(t, len(tc.Expected[i].Steps), len(hook.Steps))
 
 				for j, step := range hook.Steps {

@@ -55,6 +55,7 @@ func FilterStepsWithOnlyOn(
 		if len(steps) > 0 {
 			filtered = append(filtered, configuration.Hook{
 				Path:  hook.Path,
+				Files: hook.Files,
 				Steps: steps,
 			})
 		}

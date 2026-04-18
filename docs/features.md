@@ -95,3 +95,17 @@ gookme run -t pre-commit --from HEAD~25 --to d58688dd611ef01079f61ebae36df0ce8c3
 ````
 
 You can find more details about these options on the [gookme run reference](reference.md#gookme-run) page.
+
+## Run on staged and unstaged files
+
+By default, Gookme selects hooks using staged files. Use `--all-files` to select hooks using staged, unstaged, and untracked files.
+
+```bash
+gookme run -t pre-commit --all-files
+```
+
+Use `--dir` to limit hook selection to a target directory.
+
+```bash
+gookme run -t pre-commit --all-files --dir build/service
+```

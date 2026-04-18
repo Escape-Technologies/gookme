@@ -100,3 +100,59 @@ func TestGetNotStagedFilesWithNoNotStagedFiles(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotContains(t, files, filepath.Join(tmpDir, "file1"))
 }
+
+func TestGetStagedAndUnstagedFiles(t *testing.T) {
+	tmpDir, err := helpers.SetupTmpGit()
+	assert.NoError(t, err)
+
+	trackedPath := filepath.Join(tmpDir, "tracked.txt")
+	err = os.WriteFile(trackedPath, []byte("staged"), 0644)
+	assert.NoError(t, err)
+
+	_, err = execCommandAtPath(&tmpDir, "git", "add", ".")
+	assert.NoError(t, err)
+
+	err = os.WriteFile(trackedPath, []byte("unstaged"), 0644)
+	assert.NoError(t, err)
+
+	untrackedPath := filepath.Join(tmpDir, "untracked.txt")
+	err = os.WriteFile(untrackedPath, []byte("untracked"), 0644)
+	assert.NoError(t, err)
+
+	files, err := GetStagedAndUnstagedFiles(&tmpDir)
+
+	assert.NoError(t, err)
+	assert.Contains(t, files, trackedPath)
+	assert.Contains(t, files, untrackedPath)
+	assert.Len(t, files, 2)
+}
+
+func TestGetFilesInDirectoryIncludesIgnoredFiles(t *testing.T) {
+	tmpDir, err := helpers.SetupTmpGit()
+	assert.NoError(t, err)
+
+	err = os.WriteFile(filepath.Join(tmpDir, ".gitignore"), []byte("build/\n"), 0644)
+	assert.NoError(t, err)
+
+	servicePath := filepath.Join(tmpDir, "build", "service")
+	err = os.MkdirAll(filepath.Join(servicePath, "nested"), 0755)
+	assert.NoError(t, err)
+
+	mainPath := filepath.Join(servicePath, "main.go")
+	configPath := filepath.Join(servicePath, "nested", "config.json")
+	otherPath := filepath.Join(tmpDir, "build", "other", "main.go")
+
+	err = os.WriteFile(mainPath, []byte("package main"), 0644)
+	assert.NoError(t, err)
+	err = os.WriteFile(configPath, []byte("{}"), 0644)
+	assert.NoError(t, err)
+	err = os.MkdirAll(filepath.Dir(otherPath), 0755)
+	assert.NoError(t, err)
+	err = os.WriteFile(otherPath, []byte("package main"), 0644)
+	assert.NoError(t, err)
+
+	files, err := GetFilesInDirectory(&tmpDir, "build/service")
+
+	assert.NoError(t, err)
+	assert.ElementsMatch(t, []string{mainPath, configPath}, files)
+}

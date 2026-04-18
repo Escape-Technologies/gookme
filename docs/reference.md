@@ -35,11 +35,21 @@ Mainly used for debugging and dry run :
 | --type | -t    | The types of Git hook to run. Accepted values are: pre-commit,  prepare-commit-msg, commit-msg,  post-commit, post-merge, post-rewrite,  pre-rebase, post-checkout, pre-push |
 | --from   | -f    | (optional) Starting git reference used to evaluate hooks to run. If set, `to` has to be set as well, otherwise this option is ignored. |
 | --to   | -o    | (optional) Ending git reference used to evaluate hooks to run. If set, `from` has to be set as well, otherwise this option is ignored. |
+| --all-files |       | Include staged, unstaged, and untracked files. When `--dir` is set, include all files in that directory. |
+| --dir       |       | Limit the files used to select hooks and steps to a target directory. |
 
 ### Examples for `gookme run`
 
 ```sh title="Run all hooks for the pre-commit type"
 gookme run --type pre-commit <args>
+```
+
+```sh title="Run hooks on staged, unstaged, and untracked files"
+gookme run --type pre-commit --all-files
+```
+
+```sh title="Run hooks against files in a generated folder"
+gookme run --type pre-commit --all-files --dir build/service
 ```
 
 ## Hook files

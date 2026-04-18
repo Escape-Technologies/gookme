@@ -2,7 +2,7 @@ package cli
 
 import (
 	"os"
-	"path"
+	"path/filepath"
 	"sync"
 
 	"github.com/LMaxence/gookme/packages/configuration"
@@ -21,6 +21,8 @@ type RunCommandArguments struct {
 	GitCommandArgs []string
 	From           string
 	To             string
+	AllFiles       bool
+	TargetDir      string
 }
 
 func parseRunCommandArguments(cContext *cli.Context) (*RunCommandArguments, error) {
@@ -34,6 +36,8 @@ func parseRunCommandArguments(cContext *cli.Context) (*RunCommandArguments, erro
 		GitCommandArgs: cContext.Args().Slice(),
 		From:           cContext.String("from"),
 		To:             cContext.String("to"),
+		AllFiles:       cContext.Bool("all-files"),
+		TargetDir:      cContext.String("dir"),
 	}
 	return args, nil
 }
@@ -53,9 +57,11 @@ func run(args RunCommandArguments) error {
 	}
 
 	strategy := filters.SelectResolvingStrategy(dir, &filters.StrategySelectionParameters{
-		HookType: args.HookType,
-		From:     args.From,
-		To:       args.To,
+		HookType:  args.HookType,
+		From:      args.From,
+		To:        args.To,
+		AllFiles:  args.AllFiles,
+		TargetDir: args.TargetDir,
 	})
 	changedPaths, err := strategy.Resolve()
 	logger.Tracef("Resolved changeset: %v", changedPaths)
@@ -76,7 +82,7 @@ func run(args RunCommandArguments) error {
 	executors := make([]*executor.HookExecutor, 0, len(conf.Hooks))
 
 	customEnv := map[string]string{
-		"PATH": path.Join(dir, "hooks", "partials") + ":" + os.Getenv("PATH"),
+		"PATH": filepath.Join(dir, "hooks", "partials") + ":" + os.Getenv("PATH"),
 	}
 	for _, hook := range conf.Hooks {
 		exec := executor.NewHookExecutor(&hook, args.GitCommandArgs, customEnv)
@@ -100,7 +106,7 @@ func run(args RunCommandArguments) error {
 var RunCommand *cli.Command = &cli.Command{
 	Name:    string(RunCommandName),
 	Aliases: []string{"r"},
-	Usage:   "load and run git hooks based on staged Git changes",
+	Usage:   "load and run git hooks based on Git changes",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:    "type",
@@ -117,6 +123,14 @@ var RunCommand *cli.Command = &cli.Command{
 			Name:    "to",
 			Aliases: []string{"o"},
 			Usage:   "An optional commit SHA-1 hash to compare to generate the staged changes to.",
+		},
+		&cli.BoolFlag{
+			Name:  "all-files",
+			Usage: "Include staged, unstaged, and untracked files. When --dir is set, include all files in that directory.",
+		},
+		&cli.StringFlag{
+			Name:  "dir",
+			Usage: "Limit the files used to select hooks and steps to a target directory.",
 		},
 	},
 	Action: func(cContext *cli.Context) error {
