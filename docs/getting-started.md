@@ -5,18 +5,18 @@
 === "Linux"
 
     ``` bash title="Install Gookme"
-    curl -sSL https://raw.githubusercontent.com/LMaxence/gookme/main/scripts/install.sh | bash
+    curl -sSL https://raw.githubusercontent.com/Escape-Technologies/gookme/main/scripts/install.sh | bash
     ```
 
 === "MacOS"
 
     ``` bash title="Install Gookme"
-    curl -sSL https://raw.githubusercontent.com/LMaxence/gookme/main/scripts/install.sh | bash
+    curl -sSL https://raw.githubusercontent.com/Escape-Technologies/gookme/main/scripts/install.sh | bash
     ```
 === "Windows"
 
     ``` bash title="Install Gookme"
-    Invoke-WebRequest -Uri https://raw.githubusercontent.com/LMaxence/gookme/main/scripts/install.ps1 -OutFile install.ps1
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/Escape-Technologies/gookme/main/scripts/install.ps1 -OutFile install.ps1
     .\install.ps1
     ```
 

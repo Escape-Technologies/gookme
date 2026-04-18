@@ -1,4 +1,4 @@
 #!/bin/sh
 
-# Run packaged mookme pre-commit hook
+# Run packaged gookme commit-msg hook
 go run ./cmd/cli r -t commit-msg $1

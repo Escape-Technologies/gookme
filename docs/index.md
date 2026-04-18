@@ -12,7 +12,7 @@ linter, tests, your favorite commit message checker.
     Everything that is invoked through a cli can be used with Gookme!
 
 You are welcome to use it and enjoy its simplicity.
-**If you encounter any bug or weird behavior, don't be afraid to open an [issue](https://github.com/LMaxence/gookme/issues/new/choose) :)**
+**If you encounter any bug or weird behavior, don't be afraid to open an [issue](https://github.com/Escape-Technologies/gookme/issues/new/choose) :)**
 
 ## How does it work ?
 

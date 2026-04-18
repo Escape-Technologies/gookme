@@ -2,7 +2,7 @@
 
 *A simple and easy-to-use, yet powerful and language agnostic git hook for monorepos.*
 
-- **[see the documentation](https://lmaxence.github.io/gookme)**
+- **[see the documentation](https://escape-technologies.github.io/gookme/)**
 
 ## Development
 
@@ -16,7 +16,7 @@
 1. Clone the repository:
 
     ```shell
-    git clone https://github.com/LMaxence/gookme.git
+    git clone https://github.com/Escape-Technologies/gookme.git
     cd gookme
     ```
 
@@ -26,4 +26,4 @@
     just prepare
     ```
 
-For more detailed information, please refer to the [documentation](https://lmaxence.github.io/gookme).
+For more detailed information, please refer to the [documentation](https://escape-technologies.github.io/gookme/).

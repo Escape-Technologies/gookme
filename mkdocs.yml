@@ -1,12 +1,12 @@
 site_name: Gookme Docs
-site_url: https://gook.me
+site_url: https://escape-technologies.github.io/gookme/
 site_author: M.L.
 site_description: >-
   A pre-commit tool designed for monorepos. Successor of Mookme.
 
 # Repository
-repo_name: lmaxence/gookme
-repo_url: https://github.com/lmaxence/gookme
+repo_name: Escape-Technologies/gookme
+repo_url: https://github.com/Escape-Technologies/gookme
 
 # Copyright
 copyright: Copyright &copy; 2024 M.L.
@@ -66,4 +66,3 @@ nav:
   - Features: features.md
   - Examples: examples.md
   - Reference: reference.md
-
