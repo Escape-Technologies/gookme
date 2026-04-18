@@ -2,6 +2,7 @@ build
 !build/.gitkeep
 
 tmp
+site/
 
 .DS_Store
 Thumbs.db
@@ -9,6 +10,7 @@ desktop.ini
 
 .vscode/
 .idea/
+.venv/
 
 coverage.txt
 cover.out
