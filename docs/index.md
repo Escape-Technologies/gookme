@@ -14,6 +14,12 @@ linter, tests, your favorite commit message checker.
 You are welcome to use it and enjoy its simplicity.
 **If you encounter any bug or weird behavior, don't be afraid to open an [issue](https://github.com/Escape-Technologies/gookme/issues/new/choose) :)**
 
+## Origin and credit
+
+This Escape Technologies repository is a company-maintained fork and continuation of the original [LMaxence/gookme](https://github.com/LMaxence/gookme) project.
+
+Gookme was originally created by Maxence Lecanu (`LMaxence`), who is also an Escape Technologies employee. Most of the original code and project direction came from his work. This repository exists so Escape Technologies can maintain, release, and use Gookme from the company GitHub organization while keeping that origin and credit explicit.
+
 ## How does it work ?
 
 1. Gookme is invoked by a git hook script
