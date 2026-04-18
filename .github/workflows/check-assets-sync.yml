@@ -1,6 +1,7 @@
 name: CI Assets Synchronization
 
 on:
+  push:
   pull_request:
 
 env:
@@ -21,4 +22,3 @@ jobs:
         run: make assets
       - name: Assert no changes
         run: git diff HEAD --exit-code
-
