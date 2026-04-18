@@ -2,24 +2,17 @@ package hooksscripts
 
 /* ====================================================================
 
-This file contains utility functions to read and write scripts in the .git/hooks
-folder of a git repository.
+This file contains utility functions to read and write hook scripts.
 
 ===================================================================== */
 
 import (
 	"os"
-	"path"
-
-	"github.com/LMaxence/gookme/packages/configuration"
+	"path/filepath"
 )
 
-// LoadScriptFileContent loads the content of a file located in the .git folder of the
-// provided directory, and named after the provided hook name.
-func LoadScriptFileContent(gitFolderPath string, hookName configuration.HookType) (string, error) {
-	// Check if the script file exists in the .git folder of the provided directory
-	hookPath := path.Join(gitFolderPath, "hooks", string(hookName))
-
+// LoadScriptFileContent loads the content of a hook script.
+func LoadScriptFileContent(hookPath string) (string, error) {
 	content, err := os.ReadFile(hookPath)
 	if err != nil {
 		return "", err
@@ -27,13 +20,14 @@ func LoadScriptFileContent(gitFolderPath string, hookName configuration.HookType
 	return string(content), nil
 }
 
-// WriteScriptFileContent writes a script in the .git folder, with the provided content
-// and named after the provided hook name.
-func WriteScriptFileContent(gitFolderPath string, hookName configuration.HookType, content string) error {
-	// Check if the script file exists in the folder of the provided directory
-	hookPath := path.Join(gitFolderPath, "hooks", string(hookName))
+// WriteScriptFileContent writes a hook script with the provided content.
+func WriteScriptFileContent(hookPath string, content string) error {
+	err := os.MkdirAll(filepath.Dir(hookPath), 0755)
+	if err != nil {
+		return err
+	}
 
-	err := os.WriteFile(hookPath, []byte(content), 0755)
+	err = os.WriteFile(hookPath, []byte(content), 0755)
 	if err != nil {
 		return err
 	}
@@ -41,10 +35,7 @@ func WriteScriptFileContent(gitFolderPath string, hookName configuration.HookTyp
 	return nil
 }
 
-func DeleteScriptFile(gitFolderPath string, hookName configuration.HookType) error {
-	// Check if the script file exists in the folder of the provided directory
-	hookPath := path.Join(gitFolderPath, "hooks", string(hookName))
-
+func DeleteScriptFile(hookPath string) error {
 	err := os.Remove(hookPath)
 	if err != nil {
 		return err

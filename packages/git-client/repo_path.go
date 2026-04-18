@@ -2,6 +2,7 @@ package gitclient
 
 import (
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -27,4 +28,25 @@ func GetRepoPath(start *string) (string, error) {
 	}
 
 	return strings.TrimSpace(string(out)), nil
+}
+
+// GetGitPath returns the resolved filesystem path for a path inside Git's
+// repository metadata.
+func GetGitPath(relativePath string, start *string) (string, error) {
+	repositoryPath, err := GetRepoPath(start)
+	if err != nil {
+		return "", err
+	}
+
+	out, err := execCommandAtPath(&repositoryPath, "git", "rev-parse", "--git-path", filepath.ToSlash(relativePath))
+	if err != nil {
+		return "", err
+	}
+
+	gitPath := filepath.FromSlash(strings.TrimSpace(out))
+	if filepath.IsAbs(gitPath) {
+		return filepath.Clean(gitPath), nil
+	}
+
+	return filepath.Clean(filepath.Join(repositoryPath, gitPath)), nil
 }

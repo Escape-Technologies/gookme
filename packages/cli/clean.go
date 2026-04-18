@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/LMaxence/gookme/packages/configuration"
@@ -17,9 +17,7 @@ const (
 func cleanHookScriptFile(
 	hookType string,
 ) error {
-	repositoryPath, err := gitclient.GetRepoPath(nil)
-	gitDirPath := path.Join(repositoryPath, ".git")
-
+	hookPath, err := gitclient.GetGitPath(filepath.Join("hooks", hookType), nil)
 	if err != nil {
 		return err
 	}
@@ -27,15 +25,15 @@ func cleanHookScriptFile(
 	logger.Infof("Cleaning %s hook script", hookType)
 
 	var content string
-	logger.Debugf("Checking if script %s file exists at path %s", string(hookType), gitDirPath)
-	exists, err := hooksscripts.ScriptFileExists(gitDirPath, configuration.HookType(hookType))
+	logger.Debugf("Checking if script %s file exists at path %s", string(hookType), hookPath)
+	exists, err := hooksscripts.ScriptFileExists(hookPath)
 	if err != nil {
 		return err
 	}
 
 	if exists {
 		logger.Debugf("Script file exists for %s hook, loading content", hookType)
-		content, err = hooksscripts.LoadScriptFileContent(gitDirPath, configuration.HookType(hookType))
+		content, err = hooksscripts.LoadScriptFileContent(hookPath)
 		logger.Tracef("Loaded content of %s hook script:", hookType)
 		logger.Trace(content)
 
@@ -56,12 +54,12 @@ func cleanHookScriptFile(
 
 	if strings.Trim(content, " \n") == "#!/bin/sh" {
 		logger.Infof("Script file %s is empty, removing it", hookType)
-		err = hooksscripts.DeleteScriptFile(gitDirPath, configuration.HookType(hookType))
+		err = hooksscripts.DeleteScriptFile(hookPath)
 		if err != nil {
 			return err
 		}
 	} else {
-		err = hooksscripts.WriteScriptFileContent(gitDirPath, configuration.HookType(hookType), content)
+		err = hooksscripts.WriteScriptFileContent(hookPath, content)
 
 		if err != nil {
 			return err

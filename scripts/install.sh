@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define variables
-REPO_OWNER="LMaxence"
+REPO_OWNER="Escape-Technologies"
 REPO_NAME="gookme"
 BINARY_NAME="gookme"
 

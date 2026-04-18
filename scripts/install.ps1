@@ -1,5 +1,5 @@
 # Define variables
-$repoOwner = "LMaxence"
+$repoOwner = "Escape-Technologies"
 $repoName = "gookme"
 $binaryName = "gookme"
 $version = "latest"

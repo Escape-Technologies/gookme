@@ -9,15 +9,10 @@ and to create them if they don't.
 
 import (
 	"os"
-	"path"
-
-	"github.com/LMaxence/gookme/packages/configuration"
 )
 
-// Check if git hook script for the provided hook type exists in the provided directory
-func ScriptFileExists(gitFolderPath string, hookName configuration.HookType) (bool, error) {
-	// Check if the script file exists in the .git folder of the provided directory
-	hookPath := path.Join(gitFolderPath, "hooks", string(hookName))
+// ScriptFileExists checks if the git hook script exists.
+func ScriptFileExists(hookPath string) (bool, error) {
 	_, err := os.Stat(hookPath)
 	if err == nil {
 		return true, nil

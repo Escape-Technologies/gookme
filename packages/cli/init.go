@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/LMaxence/gookme/packages/configuration"
@@ -46,9 +46,7 @@ func parseInitCommandArguments(cContext *cli.Context) (*InitCommandArguments, er
 func createHookScriptFileOrAddScript(
 	hookType string,
 ) error {
-	repositoryPath, err := gitclient.GetRepoPath(nil)
-	gitDirPath := path.Join(repositoryPath, ".git")
-
+	hookPath, err := gitclient.GetGitPath(filepath.Join("hooks", hookType), nil)
 	if err != nil {
 		return err
 	}
@@ -56,15 +54,15 @@ func createHookScriptFileOrAddScript(
 	logger.Infof("Creating or updating %s hook script", hookType)
 
 	var content string
-	logger.Debugf("Checking if script %s file exists at path %s", string(hookType), gitDirPath)
-	exists, err := hooksscripts.ScriptFileExists(gitDirPath, configuration.HookType(hookType))
+	logger.Debugf("Checking if script %s file exists at path %s", string(hookType), hookPath)
+	exists, err := hooksscripts.ScriptFileExists(hookPath)
 	if err != nil {
 		return err
 	}
 
 	if exists {
 		logger.Debugf("Script file already exists for %s hook, loading content", hookType)
-		content, err = hooksscripts.LoadScriptFileContent(gitDirPath, configuration.HookType(hookType))
+		content, err = hooksscripts.LoadScriptFileContent(hookPath)
 		logger.Tracef("Loaded content of %s hook script:", hookType)
 		logger.Trace(content)
 
@@ -98,7 +96,7 @@ func createHookScriptFileOrAddScript(
 	logger.Trace(content)
 
 	logger.Debugf("Writing script to %s hook script file", hookType)
-	err = hooksscripts.WriteScriptFileContent(gitDirPath, configuration.HookType(hookType), content)
+	err = hooksscripts.WriteScriptFileContent(hookPath, content)
 	if err != nil {
 		return err
 	}
@@ -113,11 +111,11 @@ func assertHooksDir() error {
 		return err
 	}
 
-	hooksDirPath := path.Join(repositoryPath, "hooks")
-	partialsDirPath := path.Join(hooksDirPath, "partials")
-	partialGitKeepPath := path.Join(partialsDirPath, ".gitkeep")
-	sharedDirPath := path.Join(hooksDirPath, "shared")
-	sharedGitKeepPath := path.Join(sharedDirPath, ".gitkeep")
+	hooksDirPath := filepath.Join(repositoryPath, "hooks")
+	partialsDirPath := filepath.Join(hooksDirPath, "partials")
+	partialGitKeepPath := filepath.Join(partialsDirPath, ".gitkeep")
+	sharedDirPath := filepath.Join(hooksDirPath, "shared")
+	sharedGitKeepPath := filepath.Join(sharedDirPath, ".gitkeep")
 
 	logger.Debugf("Checking if hooks directory exists at path %s", partialsDirPath)
 
